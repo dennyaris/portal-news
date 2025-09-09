@@ -22,14 +22,21 @@ type Application struct{ Fiber *fiber.App }
 func New(cfg *config.Config) *Application {
 	app := fiber.New()
 
-	gormDB, err := db.Open(db.Config{Driver: cfg.DBDriver, DSN: cfg.DSN})
+	gormDB, err := db.InitDB(db.Config{Driver: cfg.DBDriver, DSN: cfg.DSN})
 	if err != nil {
 		log.Fatalf("db open: %v", err)
 	}
 
-	// Auto-migrations using entity structs (simple mapping)
-	if err := gormDB.AutoMigrate(&userModel{}, &categoryModel{}, &contentModel{}); err != nil {
-		log.Fatalf("auto-migrate: %v", err)
+	// Auto-migrations using entity structs
+	// if err := gormDB.AutoMigrate(
+	// 	&entity.User{},
+	// 	&entity.Category{},
+	// 	&entity.Content{}); err != nil {
+	// 	log.Fatalf("auto-migrate: %v", err)
+	// }
+
+	if err := db.SafeAutoMigrate(gormDB); err != nil {
+		log.Fatalf("migrate: %v", err)
 	}
 
 	// Repos
@@ -51,39 +58,4 @@ func New(cfg *config.Config) *Application {
 
 	router.Register(app, uh, ch, nh)
 	return &Application{Fiber: app}
-}
-
-// Local GORM model mapping mirroring entity fields
-// Keeping these here avoids coupling entity package to gorm tags if you prefer that separation.
-type userModel struct {
-	ID        string `gorm:"primaryKey;size:32"`
-	Name      string
-	Email     string `gorm:"uniqueIndex;size:191"`
-	Password  string
-	CreatedAt time.Time
-	UpdatedAt time.Time
-}
-
-type categoryModel struct {
-	ID        string `gorm:"primaryKey;size:32"`
-	Name      string
-	Slug      string `gorm:"uniqueIndex;size:191"`
-	CreatedAt time.Time
-	UpdatedAt time.Time
-}
-
-type contentModel struct {
-	ID          string `gorm:"primaryKey;size:32"`
-	Title       string
-	Slug        string `gorm:"uniqueIndex;size:191"`
-	Body        string `gorm:"type:longtext"`
-	Excerpt     string `gorm:"type:longtext"`
-	Image       string `gorm:"type:longtext"`
-	Status      string `gorm:"index;size:32"`
-	AuthorID    string `gorm:"index;size:32"`
-	CategoryID  string `gorm:"index;size:32"`
-	Tags        string `gorm:"type:longtext"`
-	PublishedAt *time.Time
-	CreatedAt   time.Time
-	UpdatedAt   time.Time
 }

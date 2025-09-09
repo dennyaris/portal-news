@@ -14,7 +14,7 @@ type Config struct {
 	DSN    string
 }
 
-func Open(cfg Config) (*gorm.DB, error) {
+func InitDB(cfg Config) (*gorm.DB, error) {
 	var dial gorm.Dialector
 	switch cfg.Driver {
 	case "mysql":

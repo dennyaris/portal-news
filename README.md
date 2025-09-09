@@ -7,8 +7,8 @@ PORT=8080
 APP_ENV=development
 
 # MySQL DSN: user:pass@tcp(host:3306)/dbname?parseTime=true&loc=Local
-DB_DRIVER=mysql
-DB_DSN=root:password@tcp(127.0.0.1:3306)/news_portal?parseTime=true&loc=Local
+#DB_DRIVER=mysql
+#DB_DSN=root:password@tcp(127.0.0.1:3306)/news_portal?parseTime=true&loc=Local
 ```
 
 ## Run
