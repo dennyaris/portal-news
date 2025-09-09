@@ -1,0 +1,33 @@
+# Ignore environment files
+.env
+
+# Ignore build and dependency files
+*.log
+*.out
+*.exe
+*.dll
+*.so
+*.dylib
+*.test
+
+# Ignore OS generated files
+.DS_Store
+Thumbs.db
+
+# Ignore IDE/editor folders
+.vscode/
+.idea/
+
+# Ignore Go build artifacts
+bin/
+coverage/
+
+# Ignore Makefile
+Makefile
+
+# Ignore other common files
+*.swp
+*.swo
+
+# Ignore vendor directory (if using vendoring)
+vendor/

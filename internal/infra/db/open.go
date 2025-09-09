@@ -5,6 +5,7 @@ import (
 	"log"
 
 	"gorm.io/driver/mysql"
+	"gorm.io/driver/postgres"
 	"gorm.io/gorm"
 )
 
@@ -18,6 +19,8 @@ func Open(cfg Config) (*gorm.DB, error) {
 	switch cfg.Driver {
 	case "mysql":
 		dial = mysql.Open(cfg.DSN)
+	case "postgres":
+		dial = postgres.Open(cfg.DSN)
 	default:
 		return nil, fmt.Errorf("unsupported driver: %s", cfg.Driver)
 	}

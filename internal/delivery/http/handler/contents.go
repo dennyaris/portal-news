@@ -5,9 +5,9 @@ import (
 	"net/http"
 
 	"github.com/dennyaris/portal-news/internal/usecase/content"
+	"github.com/dennyaris/portal-news/pkg/pagination"
+	"github.com/dennyaris/portal-news/pkg/response"
 	"github.com/gofiber/fiber/v2"
-	"github.com/yourname/news-portal-gorm/pkg/pagination"
-	"github.com/yourname/news-portal-gorm/pkg/response"
 )
 
 type ContentHandler struct{ svc content.Service }

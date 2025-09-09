@@ -1,9 +1,9 @@
 SHELL := /bin/bash
 
-APP_NAME := news-portal-gorm
+APP_NAME := portal-news
 PKG := ./...
 MAIN := ./cmd/api
-PORT ?= 8080
+PORT ?= 9898
 
 .PHONY: bootstrap run test tidy build
 
@@ -18,6 +18,3 @@ build:
 
 test:
 	go test -v $(PKG)
-
-tidy:
-	go mod tidy

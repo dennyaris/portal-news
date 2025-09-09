@@ -8,6 +8,7 @@ import (
 	"github.com/dennyaris/portal-news/internal/delivery/http/handler"
 	"github.com/dennyaris/portal-news/internal/delivery/http/router"
 	"github.com/dennyaris/portal-news/internal/infra/db"
+	sqlrepo "github.com/dennyaris/portal-news/internal/repository/sql"
 	"github.com/dennyaris/portal-news/internal/usecase/category"
 	"github.com/dennyaris/portal-news/internal/usecase/content"
 	"github.com/dennyaris/portal-news/internal/usecase/user"
@@ -58,6 +59,7 @@ type userModel struct {
 	ID        string `gorm:"primaryKey;size:32"`
 	Name      string
 	Email     string `gorm:"uniqueIndex;size:191"`
+	Password  string
 	CreatedAt time.Time
 	UpdatedAt time.Time
 }
@@ -75,9 +77,12 @@ type contentModel struct {
 	Title       string
 	Slug        string `gorm:"uniqueIndex;size:191"`
 	Body        string `gorm:"type:longtext"`
+	Excerpt     string `gorm:"type:longtext"`
+	Image       string `gorm:"type:longtext"`
 	Status      string `gorm:"index;size:32"`
 	AuthorID    string `gorm:"index;size:32"`
 	CategoryID  string `gorm:"index;size:32"`
+	Tags        string `gorm:"type:longtext"`
 	PublishedAt *time.Time
 	CreatedAt   time.Time
 	UpdatedAt   time.Time
